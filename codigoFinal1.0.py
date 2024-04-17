@@ -14,23 +14,23 @@ from webdriver_manager.chrome import ChromeDriverManager
 driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
 # Función para buscar una película
-def buscar_pelicula(nombre, result_text):
+def buscar_pelicula(nombre, mensaje):
     try:
-        df = pd.read_excel('Videoclub.xlsx')
-        pelicula = df[df['NOMBRE'].str.contains(nombre, case=False, na=False)]
+        datosPeli = pd.read_excel('Videoclub.xlsx')
+        pelicula = datosPeli[datosPeli['NOMBRE'].str.contains(nombre, case=False, na=False)]
         if not pelicula.empty:
-            result_text.insert(tk.END, f"Datos de la película encontrada:\n{pelicula}\n")
+            mensaje.insert(tk.END, f"Datos de la película encontrada:\n{pelicula}\n")
         else:
-            result_text.insert(tk.END, "La película no se encuentra en la colección.\n")
+            mensaje.insert(tk.END, "La película no se encuentra en la colección.\n")
     except Exception as e:
-        result_text.insert(tk.END, f"Error al buscar la película: {str(e)}\n")
+        mensaje.insert(tk.END, f"Error al buscar la película: {str(e)}\n")
 
 # Función para añadir una película
-def añadir_pelicula(nombre, formato, tamaño, result_text):
+def añadir_pelicula(nombre, formato, tamaño, mensaje):
     try:
-        df = pd.read_excel('Videoclub.xlsx')
-        if nombre in df['NOMBRE'].values:
-            result_text.insert(tk.END, "La película ya existe en la colección.\n")
+        datosPeli = pd.read_excel('Videoclub.xlsx')
+        if nombre in datosPeli['NOMBRE'].values:
+            mensaje.insert(tk.END, "La película ya existe en la colección.\n")
             return
 
         # Web scraping para obtener el año
@@ -46,43 +46,43 @@ def añadir_pelicula(nombre, formato, tamaño, result_text):
         año = año_elemento.text.strip()
 
 # Añadir la película utilizando concat
-        new_data = pd.DataFrame({'NOMBRE': [nombre], 'AÑO': [año], 'FORMATO': [formato], 'TAMAÑO': [tamaño]})
-        df = pd.concat([df, new_data], ignore_index=True)
-        df.to_excel('Videoclub.xlsx', index=False)
-        result_text.insert(tk.END, f"Película '{nombre}' añadida con éxito. Año: {año}\n")
+        nuevosDatos = pd.DataFrame({'NOMBRE': [nombre], 'AÑO': [año], 'FORMATO': [formato], 'TAMAÑO': [tamaño]})
+        datosPeli = pd.concat([datosPeli, nuevosDatos], ignore_index=True)
+        datosPeli.to_excel('Videoclub.xlsx', index=False)
+        mensaje.insert(tk.END, f"Película '{nombre}' añadida con éxito. Año: {año}\n")
     except Exception as e:
-        result_text.insert(tk.END, f"Error al añadir la película: {str(e)}\n")
+        mensaje.insert(tk.END, f"Error al añadir la película: {str(e)}\n")
     try:
-        df.to_excel('Videoclub.xlsx', index=False)
+        datosPeli.to_excel('Videoclub.xlsx', index=False)
     except PermissionError as e:
-        result_text.insert(tk.END, f"Error de permiso al intentar escribir el archivo: {str(e)}\n")
+        mensaje.insert(tk.END, f"Error de permiso al intentar escribir el archivo: {str(e)}\n")
     print(f"Asegúrate de que el archivo no esté abierto en otro programa y que tengas permisos adecuados.")
 
 # Función para eliminar una película
-def eliminar_pelicula(nombre, result_text):
+def eliminar_pelicula(nombre, mensaje):
     try:
-        df = pd.read_excel('Videoclub.xlsx')
-        df = df[~df['NOMBRE'].str.contains(nombre, case=False, na=False)]
-        df.to_excel('Videoclub.xlsx', index=False)
-        result_text.insert(tk.END, f"Película '{nombre}' eliminada con éxito.\n")
+        datosPeli = pd.read_excel('Videoclub.xlsx')
+        datosPeli = datosPeli[~datosPeli['NOMBRE'].str.contains(nombre, case=False, na=False)]
+        datosPeli.to_excel('Videoclub.xlsx', index=False)
+        mensaje.insert(tk.END, f"Película '{nombre}' eliminada con éxito.\n")
     except Exception as e:
-        result_text.insert(tk.END, f"Error al eliminar la película: {str(e)}\n")
+        mensaje.insert(tk.END, f"Error al eliminar la película: {str(e)}\n")
 
 # Función para modificar una película
-def modificar_pelicula(nombre, nuevo_nombre, nuevo_formato, nuevo_tamaño, result_text):
+def modificar_pelicula(nombre, nuevo_nombre, nuevo_formato, nuevo_tamaño, mensaje):
     try:
-        df = pd.read_excel('Videoclub.xlsx')
-        indices = df[df['NOMBRE'].str.contains(nombre, case=False, na=False)].index
+        datosPeli = pd.read_excel('Videoclub.xlsx')
+        indices = datosPeli[datosPeli['NOMBRE'].str.contains(nombre, case=False, na=False)].index
         if not indices.empty:
-            df.loc[indices, 'NOMBRE'] = nuevo_nombre
-            df.loc[indices, 'FORMATO'] = nuevo_formato
-            df.loc[indices, 'TAMAÑO'] = nuevo_tamaño
-            df.to_excel('Videoclub.xlsx', index=False)
-            result_text.insert(tk.END, f"Película '{nombre}' modificada con éxito.\n")
+            datosPeli.loc[indices, 'NOMBRE'] = nuevo_nombre
+            datosPeli.loc[indices, 'FORMATO'] = nuevo_formato
+            datosPeli.loc[indices, 'TAMAÑO'] = nuevo_tamaño
+            datosPeli.to_excel('Videoclub.xlsx', index=False)
+            mensaje.insert(tk.END, f"Película '{nombre}' modificada con éxito.\n")
         else:
-            result_text.insert(tk.END, "La película no se encuentra en la colección.\n")
+            mensaje.insert(tk.END, "La película no se encuentra en la colección.\n")
     except Exception as e:
-        result_text.insert(tk.END, f"Error al modificar la película: {str(e)}\n")
+        mensaje.insert(tk.END, f"Error al modificar la película: {str(e)}\n")
 
 # Configuración de la interfaz gráfica
 def init_gui():
@@ -91,25 +91,25 @@ def init_gui():
 
     # Widgets
     tk.Label(window, text="Nombre de la película:").grid(row=0, column=0)
-    name_entry = tk.Entry(window)
-    name_entry.grid(row=0, column=1)
+    entrada_nombre = tk.Entry(window)
+    entrada_nombre.grid(row=0, column=1)
 
     tk.Label(window, text="Formato:").grid(row=1, column=0)
-    format_entry = tk.Entry(window)
-    format_entry.grid(row=1, column=1)
+    entrada_formato = tk.Entry(window)
+    entrada_formato.grid(row=1, column=1)
 
     tk.Label(window, text="Tamaño:").grid(row=2, column=0)
-    size_entry = tk.Entry(window)
-    size_entry.grid(row=2, column=1)
+    entrada_tamaño = tk.Entry(window)
+    entrada_tamaño.grid(row=2, column=1)
 
-    result_text = tk.Text(window, height=15, width=50)
-    result_text.grid(row=6, column=0, columnspan=2)
+    mensaje = tk.Text(window, height=15, width=50)
+    mensaje.grid(row=6, column=0, columnspan=2)
 
     # Botones
-    tk.Button(window, text="Buscar", command=lambda: buscar_pelicula(name_entry.get(), result_text)).grid(row=3, column=0)
-    tk.Button(window, text="Añadir", command=lambda: añadir_pelicula(name_entry.get(), format_entry.get(), size_entry.get(), result_text)).grid(row=3, column=1)
-    tk.Button(window, text="Modificar", command=lambda: modificar_pelicula(name_entry.get(), name_entry.get(), format_entry.get(), size_entry.get(), result_text)).grid(row=4, column=0)
-    tk.Button(window, text="Eliminar", command=lambda: eliminar_pelicula(name_entry.get(), result_text)).grid(row=4, column=1)
+    tk.Button(window, text="Buscar", command=lambda: buscar_pelicula(entrada_nombre.get(), mensaje)).grid(row=3, column=0)
+    tk.Button(window, text="Añadir", command=lambda: añadir_pelicula(entrada_nombre.get(), entrada_formato.get(), entrada_tamaño.get(), mensaje)).grid(row=3, column=1)
+    tk.Button(window, text="Modificar", command=lambda: modificar_pelicula(entrada_nombre.get(), entrada_nombre.get(), entrada_formato.get(), entrada_tamaño.get(), mensaje)).grid(row=4, column=0)
+    tk.Button(window, text="Eliminar", command=lambda: eliminar_pelicula(entrada_nombre.get(), mensaje)).grid(row=4, column=1)
 
     window.mainloop()
 
