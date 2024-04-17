@@ -1,0 +1,111 @@
+{
+  "id": "4ff17f5b-b6b4-4e35-be70-9f5a27fe0793",
+  "version": "2.0",
+  "name": "Videoclub",
+  "url": "https://www.filmaffinity.com",
+  "tests": [{
+    "id": "34d04623-c963-4dcf-bea6-5cd4b0b0107b",
+    "name": "selectores filmaffinity",
+    "commands": [{
+      "id": "3a82f2bf-0f20-4b24-86d1-e830c0529463",
+      "comment": "",
+      "command": "open",
+      "target": "/es/main.html",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "12fc3bd6-1a2b-43a9-90e6-b7fd0d365d7f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x1080",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "67e05903-d154-4e82-a22c-d3e16cd3ad33",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Oppenheimer",
+      "targets": [
+        ["linkText=Oppenheimer", "linkText"],
+        ["css=.se-it:nth-child(2) .mc-title > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Oppenheimer')]", "xpath:link"],
+        ["xpath=//div[@id='title-result']/div/div[2]/div[2]/div/div[2]/div/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, 'https://www.filmaffinity.com/es/film294474.html')])[2]", "xpath:href"],
+        ["xpath=//div[2]/div/div[2]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Oppenheimer')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f326eafa-15cf-4dc4-9e7e-4fcf9aeed1a3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.css-113jtbf:nth-child(2) > span",
+      "targets": [
+        ["css=.css-113jtbf:nth-child(2) > span", "css:finder"],
+        ["xpath=//div[@id='qc-cmp2-ui']/div[2]/div/button[2]/span", "xpath:idRelative"],
+        ["xpath=//button[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'NO ACEPTO')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "01aedbb1-c01f-47db-ae0e-a3b88b879f2f",
+      "comment": "",
+      "command": "click",
+      "target": "id=top-search-input-2",
+      "targets": [
+        ["id=top-search-input-2", "id"],
+        ["name=stext", "name"],
+        ["css=#top-search-input-2", "css:finder"],
+        ["xpath=//input[@id='top-search-input-2']", "xpath:attributes"],
+        ["xpath=//div[@id='topsearch-ac']/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "36e43884-a7ed-478b-b71a-0903e1aaec8e",
+      "comment": "",
+      "command": "type",
+      "target": "id=top-search-input-2",
+      "targets": [
+        ["id=top-search-input-2", "id"],
+        ["name=stext", "name"],
+        ["css=#top-search-input-2", "css:finder"],
+        ["xpath=//input[@id='top-search-input-2']", "xpath:attributes"],
+        ["xpath=//div[@id='topsearch-ac']/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "nombre"
+    }, {
+      "id": "17a26ba7-8bb0-4e69-b315-ed17f494a6f6",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=top-search-input-2",
+      "targets": [
+        ["id=top-search-input-2", "id"],
+        ["name=stext", "name"],
+        ["css=#top-search-input-2", "css:finder"],
+        ["xpath=//input[@id='top-search-input-2']", "xpath:attributes"],
+        ["xpath=//div[@id='topsearch-ac']/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "4a2d1045-7857-467f-85f1-7116d3fb6bd8",
+      "comment": "",
+      "command": "click",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "bcee1f3a-9039-4d35-b083-153657276a46",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["34d04623-c963-4dcf-bea6-5cd4b0b0107b"]
+  }],
+  "urls": ["https://www.filmaffinity.com/"],
+  "plugins": []
+}
