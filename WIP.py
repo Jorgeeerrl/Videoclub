@@ -7,39 +7,39 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
-
-
-
-def buscar_pelicula_o_director(nombre, director, mensaje):
+def buscar_pelicula_o_director(nombre, director, año, mensaje):
     try:
         df = pd.read_excel('Videoclub.xlsx')
-        if nombre:  
-            pelicula = df[df['NOMBRE'].str.contains(nombre, case=False, na=False)]
-            if not pelicula.empty:
-                mensaje.insert(tk.END, f"Datos de la película encontrada:\n{pelicula}\n")
+        if nombre:
+            bypeli = df[df['NOMBRE'].str.contains(nombre, case=False, na=False)]
+            if not bypeli.empty:
+                mensaje.insert(tk.END, f"Datos de la película encontrada:\n{bypeli}\n")
             else:
                 mensaje.insert(tk.END, "La película no se encuentra en la colección.\n")
-        elif director:  
-            peliculas = df[df['DIRECTOR'].str.contains(director, case=False, na=False)]
-            if not peliculas.empty:
-                mensaje.insert(tk.END, f"Películas encontradas del director {director}:\n{peliculas[['NOMBRE', 'AÑO']]}")
+        elif director:
+            bydirector = df[df['DIRECTOR'].str.contains(director, case=False, na=False)]
+            if not bydirector.empty:
+                mensaje.insert(tk.END, f"Películas encontradas del director {director}:\n{bydirector[['NOMBRE', 'AÑO']]}")
             else:
                 mensaje.insert(tk.END, "No se encontraron películas de ese director.\n")
+        elif año:
+            df["AÑO"] = df["AÑO"].astype(str)
+            byaño = (df[df['AÑO'].str.contains(año, case=False, na=False)])
+            if not byaño.empty:
+                mensaje.insert(tk.END, f"Películas encontradas del año {(año)}:\n{byaño[['NOMBRE', 'DIRECTOR']]}")
+            else:
+                mensaje.insert(tk.END, "No se encontraron películas de ese año.\n")
         else:
-            mensaje.insert(tk.END, "Por favor, introduce el nombre de una película o un director.\n")
+            mensaje.insert(tk.END, "Por favor, introduce un dato para buscar.\n")
     except Exception as e:
         mensaje.insert(tk.END, f"Error al buscar: {str(e)}\n")
 
 
-
-
-
-def añadir_pelicula(nombre, formato, tamaño, mensaje):
+def añadir_pelicula(nombre, año, director, formato, tamaño, mensaje):
     try:
         datosPeli = pd.read_excel('Videoclub.xlsx')
         if nombre in datosPeli['NOMBRE'].values:
@@ -70,12 +70,14 @@ def añadir_pelicula(nombre, formato, tamaño, mensaje):
         mensaje.insert(tk.END, f"Error de permiso al intentar escribir el archivo: {str(e)}\n")
     print(f"Asegúrate de que el archivo no esté abierto en otro programa y que tengas permisos adecuados.")
 
-def modificar_pelicula(nombre, nuevo_nombre, nuevo_formato, nuevo_tamaño, mensaje):
+def modificar_pelicula(nombre, nuevo_nombre, nuevo_año, nuevo_director, nuevo_formato, nuevo_tamaño, mensaje):
     try:
         datosPeli = pd.read_excel('Videoclub.xlsx')
         indices = datosPeli[datosPeli['NOMBRE'].str.contains(nombre, case=False, na=False)].index
         if not indices.empty:
             datosPeli.loc[indices, 'NOMBRE'] = nuevo_nombre
+            datosPeli.loc[indices, 'AÑO'] = nuevo_año
+            datosPeli.loc[indices, 'DIRECTOR'] = nuevo_director
             datosPeli.loc[indices, 'FORMATO'] = nuevo_formato
             datosPeli.loc[indices, 'TAMAÑO'] = nuevo_tamaño
             datosPeli.to_excel('Videoclub.xlsx', index=False)
@@ -94,6 +96,7 @@ def eliminar_pelicula(nombre, mensaje):
     except Exception as e:
         mensaje.insert(tk.END, f"Error al eliminar la película: {str(e)}\n")
 
+
 def init_gui():
     window = tk.Tk()
     window.title("Gestión de Colección de Películas")
@@ -106,21 +109,25 @@ def init_gui():
     entrada_director = tk.Entry(window)
     entrada_director.grid(row=1, column=1)
 
-    tk.Label(window, text="Formato:").grid(row=2, column=0)
+    tk.Label(window, text="Año:").grid(row=2, column=0)
+    entrada_año = tk.Entry(window)
+    entrada_año.grid(row=2, column=1)
+
+    tk.Label(window, text="Formato:").grid(row=3, column=0)
     entrada_formato = tk.Entry(window)
-    entrada_formato.grid(row=2, column=1)
+    entrada_formato.grid(row=3, column=1)
 
-    tk.Label(window, text="Tamaño:").grid(row=3, column=0)
+    tk.Label(window, text="Tamaño:").grid(row=4, column=0)
     entrada_tamaño = tk.Entry(window)
-    entrada_tamaño.grid(row=3, column=1)
+    entrada_tamaño.grid(row=4, column=1)
 
-    mensaje = tk.Text(window, height=15, width=100)
-    mensaje.grid(row=6, column=0, columnspan=2)
-    
-    tk.Button(window, text="Buscar", command=lambda: buscar_pelicula_o_director(entrada_nombre.get(),entrada_director.get(), mensaje)).grid(row=4, column=0)
-    tk.Button(window, text="Añadir", command=lambda: añadir_pelicula(entrada_nombre.get(), entrada_director.get(),entrada_formato.get(), entrada_tamaño.get(), mensaje)).grid(row=4, column=1)
-    tk.Button(window, text="Modificar", command=lambda: modificar_pelicula(entrada_nombre.get(), entrada_director.get(), entrada_formato.get(), entrada_tamaño.get(), mensaje)).grid(row=5, column=0)
-    tk.Button(window, text="Eliminar", command=lambda: eliminar_pelicula(entrada_nombre.get(), mensaje)).grid(row=5, column=1)
+    mensaje = tk.Text(window, height=15, width=100, font=("Arial", 10))
+    mensaje.grid(row=7, column=0, columnspan=2)
+
+    tk.Button(window, text="Buscar", command=lambda: buscar_pelicula_o_director(entrada_nombre.get(), entrada_director.get(), entrada_año.get(), mensaje)).grid(row=5, column=0)
+    tk.Button(window, text="Añadir", command=lambda: añadir_pelicula(entrada_nombre.get(), entrada_año.get(), entrada_director.get(), entrada_formato.get(), entrada_tamaño.get(), mensaje)).grid(row=5, column=1)
+    tk.Button(window, text="Modificar", command=lambda: modificar_pelicula(entrada_nombre.get(), entrada_director.get(), entrada_formato.get(), entrada_tamaño.get(), mensaje)).grid(row=6, column=0)
+    tk.Button(window, text="Eliminar", command=lambda: eliminar_pelicula(entrada_nombre.get(), mensaje)).grid(row=6, column=1)
     window.mainloop()
 
 if __name__ == "__main__":
