@@ -116,3 +116,4 @@ def init_gui():
 # Iniciar la interfaz gráfica
 if __name__ == "__main__":
     init_gui()
+    
