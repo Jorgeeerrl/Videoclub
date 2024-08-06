@@ -26,7 +26,7 @@ def buscar_pelicula(nombre, mensaje):
         mensaje.insert(tk.END, f"Error al buscar la película: {str(e)}\n")
 
 # Función para añadir una película
-def añadir_pelicula(nombre, formato, tamaño, mensaje):
+def add_pelicula(nombre, formato, tamaño, mensaje):
     try:
         datosPeli = pd.read_excel('Videoclub.xlsx')
         if nombre in datosPeli['NOMBRE'].values:
@@ -107,7 +107,7 @@ def init_gui():
 
     # Botones
     tk.Button(window, text="Buscar", command=lambda: buscar_pelicula(entrada_nombre.get(), mensaje)).grid(row=3, column=0)
-    tk.Button(window, text="Añadir", command=lambda: añadir_pelicula(entrada_nombre.get(), entrada_formato.get(), entrada_tamaño.get(), mensaje)).grid(row=3, column=1)
+    tk.Button(window, text="Añadir", command=lambda: add_pelicula(entrada_nombre.get(), entrada_formato.get(), entrada_tamaño.get(), mensaje)).grid(row=3, column=1)
     tk.Button(window, text="Modificar", command=lambda: modificar_pelicula(entrada_nombre.get(), entrada_nombre.get(), entrada_formato.get(), entrada_tamaño.get(), mensaje)).grid(row=4, column=0)
     tk.Button(window, text="Eliminar", command=lambda: eliminar_pelicula(entrada_nombre.get(), mensaje)).grid(row=4, column=1)
 

@@ -28,9 +28,9 @@ def buscar_pelicula_o_director(nombre, director, año, mensaje):
                 mensaje.insert(tk.END, "No se encontraron películas de ese director.\n")
         elif año:
             df["AÑO"] = df["AÑO"].astype(str)
-            byaño = (df[df['AÑO'].str.contains(año, case=False, na=False)])
-            if not byaño.empty:
-                mensaje.insert(tk.END, f"Películas encontradas del año {(año)}:\n{byaño[['NOMBRE', 'DIRECTOR']]}")
+            byanyo = (df[df['AÑO'].str.contains(año, case=False, na=False)])
+            if not byanyo.empty:
+                mensaje.insert(tk.END, f"Películas encontradas del año {(año)}:\n{byanyo[['NOMBRE', 'DIRECTOR']]}")
             else:
                 mensaje.insert(tk.END, "No se encontraron películas de ese año.\n")
         else:
@@ -39,7 +39,7 @@ def buscar_pelicula_o_director(nombre, director, año, mensaje):
         mensaje.insert(tk.END, f"Error al buscar: {str(e)}\n")
 
 
-def añadir_pelicula(nombre, año, director, formato, tamaño, mensaje):
+def add_pelicula(nombre, año, director, formato, tamaño, mensaje):
     try:
         datosPeli = pd.read_excel('Videoclub.xlsx')
         if nombre in datosPeli['NOMBRE'].values:
@@ -125,7 +125,7 @@ def init_gui():
     mensaje.grid(row=7, column=0, columnspan=2)
 
     tk.Button(window, text="Buscar", command=lambda: buscar_pelicula_o_director(entrada_nombre.get(), entrada_director.get(), entrada_año.get(), mensaje)).grid(row=5, column=0)
-    tk.Button(window, text="Añadir", command=lambda: añadir_pelicula(entrada_nombre.get(), entrada_año.get(), entrada_director.get(), entrada_formato.get(), entrada_tamaño.get(), mensaje)).grid(row=5, column=1)
+    tk.Button(window, text="Añadir", command=lambda: add_pelicula(entrada_nombre.get(), entrada_año.get(), entrada_director.get(), entrada_formato.get(), entrada_tamaño.get(), mensaje)).grid(row=5, column=1)
     tk.Button(window, text="Modificar", command=lambda: modificar_pelicula(entrada_nombre.get(), entrada_director.get(), entrada_formato.get(), entrada_tamaño.get(), mensaje)).grid(row=6, column=0)
     tk.Button(window, text="Eliminar", command=lambda: eliminar_pelicula(entrada_nombre.get(), mensaje)).grid(row=6, column=1)
     window.mainloop()
