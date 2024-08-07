@@ -11,8 +11,8 @@ Es una aplicación en continuo crecimiento, ya que le voy añadiendo funcionalid
 y ahora permite también la adición, modificación y eliminación de películas, además de scrapear datos de la web filmaffinity.com al añadir películas. También le he mejorado la GUI con PyQt5 en la última versión.
 
 <div>
-  <img align="left" src="https://github.com/Jorgeeerrl/Videoteca/blob/main/recursos/busqueda.jpg" height="380" />
-  <img align="left" src="https://github.com/Jorgeeerrl/Videoteca/blob/main/recursos/a%C3%B1adir.jpg" height="380" />
+  <img align="left" src="https://github.com/Jorgeeerrl/Videoteca/blob/main/recursos/busqueda.jpg" height="375" />
+  <img align="left" src="https://github.com/Jorgeeerrl/Videoteca/blob/main/recursos/a%C3%B1adir.jpg" height="375" />
 </div>
 <br clear="left"/>
 
