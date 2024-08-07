@@ -3,7 +3,7 @@
 
 ## Descripción del Proyecto
 
-**VIDEOCLUB** es una aplicación de escritorio para la gestión de una colección de películas desarrollada en Python, utilizando PyQt5 para la interfaz gráfica de usuario (GUI) y pandas para el manejo de datos.
+**VIDEOCLUB** es una aplicación de escritorio para la gestión de una colección de películas desarrollada en Python, utilizando PyQt5 para la interfaz gráfica de usuario (GUI) y Pandas para el manejo de datos.
 <br>
 La aplicación permite a los usuarios gestionar una base de datos de películas, incluyendo funciones para buscar, añadir, modificar y eliminar películas.
 <br>
