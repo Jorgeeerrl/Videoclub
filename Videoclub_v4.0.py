@@ -17,7 +17,7 @@ class VentanaPrincipal(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle('Gestión de Colección de Películas')
+        self.setWindowTitle('VIDEOCLUB - Videoclub_v4.0')
         self.setGeometry(100, 100, 800, 600)
 
         self.center()
