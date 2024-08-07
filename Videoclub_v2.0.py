@@ -13,7 +13,7 @@ driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install())
 
 def buscar_pelicula_o_director(nombre, director, año, mensaje):
     try:
-        df = pd.read_excel('D:/Cosas Serias/IT/BBDD Películas/Videoclub.xlsx')
+        df = pd.read_excel('./recursos/Videoclub.xlsx')
         if nombre:
             bypeli = df[df['NOMBRE'].str.contains(nombre, case=False, na=False)]
             if not bypeli.empty:
@@ -41,7 +41,7 @@ def buscar_pelicula_o_director(nombre, director, año, mensaje):
 
 def add_pelicula(nombre, año, director, formato, tamaño, mensaje):
     try:
-        datosPeli = pd.read_excel('Videoclub.xlsx')
+        datosPeli = pd.read_excel('./recursos/Videoclub.xlsx')
         if nombre in datosPeli['NOMBRE'].values:
             mensaje.insert(tk.END, "La película ya existe en la colección.\n")
             return
@@ -60,19 +60,19 @@ def add_pelicula(nombre, año, director, formato, tamaño, mensaje):
 
         nuevosDatos = pd.DataFrame({'NOMBRE': [nombre], 'AÑO': [año], 'FORMATO': [formato], 'TAMAÑO': [tamaño], 'DIRECTOR': [director]})
         datosPeli = pd.concat([datosPeli, nuevosDatos], ignore_index=True)
-        datosPeli.to_excel('Videoclub.xlsx', index=False)
+        datosPeli.to_excel('./recursos/Videoclub.xlsx', index=False)
         mensaje.insert(tk.END, f"Película '{nombre}' añadida con éxito. Año: {año}\n Director: {director}\n")
     except Exception as e:
         mensaje.insert(tk.END, f"Error al añadir la película: {str(e)}\n")
     try:
-        datosPeli.to_excel('Videoclub.xlsx', index=False)
+        datosPeli.to_excel('./recursos/Videoclub.xlsx', index=False)
     except PermissionError as e:
         mensaje.insert(tk.END, f"Error de permiso al intentar escribir el archivo: {str(e)}\n")
     print(f"Asegúrate de que el archivo no esté abierto en otro programa y que tengas permisos adecuados.")
 
 def modificar_pelicula(nombre, nuevo_nombre, nuevo_año, nuevo_director, nuevo_formato, nuevo_tamaño, mensaje):
     try:
-        datosPeli = pd.read_excel('Videoclub.xlsx')
+        datosPeli = pd.read_excel('./recursos/Videoclub.xlsx')
         indices = datosPeli[datosPeli['NOMBRE'].str.contains(nombre, case=False, na=False)].index
         if not indices.empty:
             datosPeli.loc[indices, 'NOMBRE'] = nuevo_nombre
@@ -80,7 +80,7 @@ def modificar_pelicula(nombre, nuevo_nombre, nuevo_año, nuevo_director, nuevo_f
             datosPeli.loc[indices, 'DIRECTOR'] = nuevo_director
             datosPeli.loc[indices, 'FORMATO'] = nuevo_formato
             datosPeli.loc[indices, 'TAMAÑO'] = nuevo_tamaño
-            datosPeli.to_excel('Videoclub.xlsx', index=False)
+            datosPeli.to_excel('./recursos/Videoclub.xlsx', index=False)
             mensaje.insert(tk.END, f"Película '{nombre}' modificada con éxito.\n")
         else:
             mensaje.insert(tk.END, "La película no se encuentra en la colección.\n")
@@ -89,9 +89,9 @@ def modificar_pelicula(nombre, nuevo_nombre, nuevo_año, nuevo_director, nuevo_f
 
 def eliminar_pelicula(nombre, mensaje):
     try:
-        datosPeli = pd.read_excel('Videoclub.xlsx')
+        datosPeli = pd.read_excel('./recursos/Videoclub.xlsx')
         datosPeli = datosPeli[~datosPeli['NOMBRE'].str.contains(nombre, case=False, na=False)]
-        datosPeli.to_excel('Videoclub.xlsx', index=False)
+        datosPeli.to_excel('./recursos/Videoclub.xlsx', index=False)
         mensaje.insert(tk.END, f"Película '{nombre}' eliminada con éxito.\n")
     except Exception as e:
         mensaje.insert(tk.END, f"Error al eliminar la película: {str(e)}\n")

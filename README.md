@@ -14,7 +14,7 @@ y ahora permite también la adición, modificación y eliminación de películas
 - **Modificar Películas**: Permite modificar los detalles de una película existente en la base de datos.
 - **Eliminar Películas**: Permite eliminar una película de la base de datos.
   
-- La base de datos de películas se guarda en un archivo Excel (Videoclub.xlsx) ubicado en D:/Cosas Serias/IT/BBDD Películas/.
+- La base de datos de películas se guarda en un archivo Excel (Videoclub.xlsx) ubicado en ./recursos/.
 - La aplicación utiliza estilos CSS para mejorar la apariencia de los botones y la tabla de resultados.
 - Los datos de las películas se muestran en una tabla HTML dentro de la interfaz, lo que asegura una mejor alineación y presentación.
 
