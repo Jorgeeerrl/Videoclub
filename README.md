@@ -10,6 +10,12 @@ La aplicación permite a los usuarios gestionar una base de datos de películas,
 Es una aplicación en continuo crecimiento, ya que le voy añadiendo funcionalidades nuevas y le voy mejorando la interfaz gráfica. Empezó con una simple búsqueda de películas por su nombre en la base de datos y usando twinker para la GUI, 
 y ahora permite también la adición, modificación y eliminación de películas, además de scrapear datos de la web filmaffinity.com al añadir películas. También le he mejorado la GUI con PyQt5 en la última versión.
 
+<div>
+  <img align="left" src="https://github.com/Jorgeeerrl/Videoteca/blob/main/recursos/busqueda.jpg" height="425" />
+  <img align="left" src="https://github.com/Jorgeeerrl/Videoteca/blob/main/recursos/a%C3%B1adir.jpg" height="425" />
+</div>
+<br clear="left"/>
+
 ## Funcionalidades
 
 - **Buscar Películas**: Permite buscar películas en la base de datos por nombre, director o año.
