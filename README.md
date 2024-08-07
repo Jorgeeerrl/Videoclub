@@ -16,10 +16,12 @@ y ahora permite también la adición, modificación y eliminación de películas
 - **Añadir Películas**: Permite añadir nuevas películas a la base de datos. 
 - **Modificar Películas**: Permite modificar los detalles de una película existente en la base de datos.
 - **Eliminar Películas**: Permite eliminar una película de la base de datos.
-  
-- La base de datos de películas se guarda en un archivo Excel (Videoclub.xlsx) ubicado en D:/Cosas Serias/IT/BBDD Películas/.
-- La aplicación utiliza estilos CSS para mejorar la apariencia de los botones y la tabla de resultados.
-- Los datos de las películas se muestran en una tabla HTML dentro de la interfaz, lo que asegura una mejor alineación y presentación.
+
+## Características Destacables
+
+- **Auto-rellenado de datos**: Utiliza Selenium para obtener información adicional de Filmaffinity y rellenar el director y el año en el momento de añadir una película por su nombre.
+- **Estilado**: La aplicación utiliza estilos CSS para mejorar la apariencia de los botones y la tabla de resultados.
+- **Interfaz**: Los datos de las películas se muestran en una tabla HTML dentro de la interfaz, lo que asegura una mejor alineación y presentación.
 
 ## Bibliotecas Utilizadas
 - **PyQt5**: Para la creación de la interfaz gráfica de usuario.
