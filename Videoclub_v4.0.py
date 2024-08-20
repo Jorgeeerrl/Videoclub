@@ -9,6 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
+import os
 
 class VentanaPrincipal(QWidget):
     def __init__(self):
@@ -23,7 +24,9 @@ class VentanaPrincipal(QWidget):
         self.center()
 
         self.logo_label = QLabel(self)
-        self.logo_pixmap = QPixmap("./recursos/Logo Videoclub.jpg") 
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        logo_path = os.path.join(base_dir, "recursos", "Logo Videoclub.jpg")
+        self.logo_pixmap = QPixmap(logo_path)
         self.logo_pixmap = self.logo_pixmap.scaled(800, 400, Qt.KeepAspectRatio)  
         self.logo_label.setPixmap(self.logo_pixmap)
         self.logo_label.setAlignment(Qt.AlignCenter)
@@ -75,12 +78,8 @@ class VentanaPrincipal(QWidget):
             border: none;
             padding: 10px 20px;
             text-align: center;
-            text-decoration: none;
-            display: inline-block;
             font-size: 16px;
             margin: 4px 2px;
-            transition-duration: 0.4s;
-            cursor: pointer;
         }
         QPushButton:hover {
             background-color: white;
